@@ -20,3 +20,7 @@ class WatchSerializer(serializers.Serializer):
         instance.save()
         return instance
     
+    def toogle(self,instance):
+        instance.published=not instance.published
+        instance.save()
+        return instance
