@@ -30,7 +30,7 @@ class WatchSerializer(serializers.Serializer):
             raise serializers.ValidationError("Title and About Should not be SAME")
         return data
     
-    def validate_title(self,value):
-        if len(value)<2:
-            raise serializers.ValidationError("Name too Short")
-        return value
+    # def validate_title(self,value):
+    #     if len(value)<2:
+    #         raise serializers.ValidationError("Name too Short")
+    #     return value
