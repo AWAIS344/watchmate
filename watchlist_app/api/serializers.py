@@ -24,3 +24,8 @@ class WatchSerializer(serializers.Serializer):
         instance.published=not instance.published
         instance.save()
         return instance
+    
+    def validate_title(self,value):
+        if len(value)<2:
+            raise serializers.ValidationError("Name too Short")
+        return value

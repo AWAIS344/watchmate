@@ -12,12 +12,16 @@ class MOVIELISTAV(APIView):
         serializers=WatchSerializer(movie,many=True)
         return Response(serializers.data)
     
-    def post(self,request):
-        serializers=WatchSerializer(data=request.data)
-        if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def post(self, request):
+        serializer = WatchSerializer(data=request.data)  # ✅ Fixed variable name (not "serializers")
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)  # ✅ 201 for success
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  # ✅ 400 for errors
+
     
 
 
