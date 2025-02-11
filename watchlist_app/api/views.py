@@ -3,18 +3,18 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from watchlist_app import models
-from .serializers import WatchSerializer
+from .serializers import WatchListSerializer
 
-class MOVIELISTAV(APIView):
+class WATCHLISTAV(APIView):
 
     def get(self,request):
-        movie=models.Movie.objects.all()
-        serializers=WatchSerializer(movie,many=True)
+        movie=models.WatchList.objects.all()
+        serializers=WatchListSerializer(movie,many=True)
         return Response(serializers.data)
     
 
     def post(self, request):
-        serializer = WatchSerializer(data=request.data)  # ✅ Fixed variable name (not "serializers")
+        serializer = WatchListSerializer(data=request.data)  # ✅ Fixed variable name (not "serializers")
         
         if serializer.is_valid():
             serializer.save()
@@ -25,31 +25,31 @@ class MOVIELISTAV(APIView):
     
 
 
-class MOVIEDETAILSAC(APIView):
+class WATCHDETAILSAC(APIView):
 
     def get(self,request,pk):
-        movie=models.Movie.objects.get(pk=pk)
-        serializer = WatchSerializer(movie)
+        movie=models.WatchList.objects.get(pk=pk)
+        serializer = WatchListSerializer(movie)
 
         return Response(serializer.data)
 
 
     def put(self,request,pk):
-        movie =models.Movie.objects.get(pk=pk)
-        serializers=WatchSerializer(movie,data=request.data)
+        movie =models.WatchList.objects.get(pk=pk)
+        serializers=WatchListSerializer(movie,data=request.data)
         if serializers.is_valid():
             serializers.save()
             return Response(serializers.data)
         return Response(status=status.HTTP_404_NOT_FOUND)
     
     def delete(self,request,pk):
-        movie=models.Movie.objects.get(pk=pk)
+        movie=models.WatchList.objects.get(pk=pk)
         movie.delete()
         return Response({"message":"Movie deleted"})
     
     def patch(self,request,pk):
-        movie=models.Movie.objects.get(pk=pk)
-        serializer=WatchSerializer()
+        movie=models.WatchList.objects.get(pk=pk)
+        serializer=WatchListSerializer()
         movie=serializer.toogle(movie)
 
         return Response({'message':"Status Updated Successfully","pulished":movie.published})

@@ -2,12 +2,24 @@ from django.db import models
 
 # Create your models here.
 
-class Movie(models.Model):
+
+class StreamPlatform(models.Model):
+
+    name=models.CharField(max_length=30)
+    about=models.CharField(max_length=200)
+    link=models.URLField(auto_created=100)
+    
+    def __str__(self):
+        return self.name
+    
+
+class WatchList(models.Model):
     title = models.CharField(max_length=32)
-    about=models.TextField()
+    storyline=models.TextField()
     genre = models.CharField(max_length=32)
     published=models.BooleanField(default=True)
     year = models.IntegerField()
+    created_at=models.DateTimeField(auto_now=True)
     # created_at = models.DateTimeField(auto_now_add=True)
     # updated_at = models.DateTimeField(auto_now=True)
 
