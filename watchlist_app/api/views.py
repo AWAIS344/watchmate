@@ -71,5 +71,18 @@ class PlatformDetailsAC(APIView):
         
         serializer=StreamPlatformSerializer(stream)
         return Response(serializer.data)
+    
+    def put(self,request,pk):
+        stream=models.StreamPlatform.objects.get(pk=pk)
+        serializer=StreamPlatformSerializer(stream,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(serializer.data)
+        return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
+    
+    def delete(self,request,pk):
+        stream=models.StreamPlatform.objects
+    
 
     

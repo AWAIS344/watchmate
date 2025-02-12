@@ -36,4 +36,6 @@ class StreamPlatformSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Title and About Should not be SAME")
         return data
     
+  
+    
     
