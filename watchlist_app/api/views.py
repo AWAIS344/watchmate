@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from watchlist_app import models
 from .serializers import WatchListSerializer,StreamPlatformSerializer
+
 class WATCHLISTAV(APIView):
 
     def get(self,request):
@@ -49,7 +50,7 @@ class PlatformAC(APIView):
 
     def get(self,request):
         stream=models.StreamPlatform.objects.all()
-        serializer=StreamPlatformSerializer(stream,many=True)
+        serializer=StreamPlatformSerializer(stream,many=True,context={'request': request})
 
         return Response(serializer.data)
     
