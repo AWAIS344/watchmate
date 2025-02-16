@@ -70,7 +70,7 @@ class PlatformDetailsAC(APIView):
         except:
             return Response(status=status.HTTP_404_NOT_FOUND)
         
-        serializer=StreamPlatformSerializer(stream)
+        serializer=StreamPlatformSerializer(stream,context={'request': request})
         return Response(serializer.data)
     
     def put(self,request,pk):

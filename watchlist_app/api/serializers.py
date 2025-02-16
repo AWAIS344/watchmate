@@ -26,14 +26,19 @@ class WatchListSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Name too Short")
         return value
     
-class StreamPlatformSerializer(serializers.ModelSerializer):
+class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
+    
 
     # watchlist=WatchListSerializer(many=True,read_only=True)
-    watchlist=serializers.HyperlinkedRelatedField(many=True,read_only=True,view_name='moviedetails')
-
+    watchlist = serializers.HyperlinkedRelatedField(
+        many=True, read_only=True, view_name="moviedetails"  # ✅ Must match URL name in urls.py
+    )
     class Meta:
         model=StreamPlatform
         fields="__all__"
+        extra_kwargs = {
+            'url': {'view_name': 'platformdetails'}  # ✅ Explicitly define the correct view name
+        }
 
     def validate(self,data):
         if data['name'] == data["about"]:
