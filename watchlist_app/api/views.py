@@ -18,6 +18,12 @@ class ReviewList(mixins.ListModelMixin,mixins.CreateModelMixin, generics.Generic
     def post(self,request,*args, **kwargs):
         return self.create(request,*args, **kwargs)
     
+class ReviewDetails(mixins.RetrieveModelMixin, generics.GenericAPIView):
+    queryset=Reviews.objects.all()
+    serializer_class=ReviewSerializer
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+    
 class WATCHLISTAV(APIView):
 
     def get(self,request):
