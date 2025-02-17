@@ -37,13 +37,13 @@ class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
 
     # watchlist=WatchListSerializer(many=True,read_only=True)
     watchlist = serializers.HyperlinkedRelatedField(
-        many=True, read_only=True, view_name="moviedetails"  # ✅ Must match URL name in urls.py
+        many=True, read_only=True, view_name="moviedetails" 
     )
     class Meta:
         model=StreamPlatform
         fields="__all__"
         extra_kwargs = {
-            'url': {'view_name': 'platformdetails'}  # ✅ Explicitly define the correct view name
+            'url': {'view_name': 'platformdetails'}  
         }
 
     def validate(self,data):
