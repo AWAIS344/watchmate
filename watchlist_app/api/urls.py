@@ -10,8 +10,6 @@ urlpatterns = [
     path("stream/",PlatformAC.as_view(),name="platformsav"),
     path("stream/<int:pk>",PlatformDetailsAC.as_view(),name="platformdetails"),
 
-    # path("review/",ReviewList.as_view(),name="reviews"),
-    # path("review/<int:pk>",ReviewDetails.as_view(),name="reviews_details")
 
     path("stream/<int:pk>/review-create",ReviewCreate.as_view(),name="review_create"),
     path("stream/review/<int:pk>",ReviewDetails.as_view(),name="review_detail"),
