@@ -33,13 +33,13 @@ class WatchListSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Name too Short")
         return value
     
-class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
+class StreamPlatformSerializer(serializers.ModelSerializer):
     
 
-    # watchlist=WatchListSerializer(many=True,read_only=True)
-    watchlist = serializers.HyperlinkedRelatedField(
-        many=True, read_only=True, view_name="moviedetails" 
-    )
+    watchlist=WatchListSerializer(many=True,read_only=True)
+    # watchlist = serializers.HyperlinkedRelatedField(
+    #     many=True, read_only=True, view_name="moviedetails" 
+    # )
     class Meta:
         model=StreamPlatform
         fields="__all__"

@@ -1,11 +1,24 @@
-from rest_framework import serializers,generics
+from rest_framework import serializers,generics,viewsets
 from rest_framework.views import APIView
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
 
 from watchlist_app.models import Reviews,WatchList, StreamPlatform
 from .serializers import WatchListSerializer,StreamPlatformSerializer,ReviewSerializer
 
+
+class StreamPlatformVS(viewsets.ViewSet):
+    def list(self,request):
+        queryset=StreamPlatform.objects.all()
+        serializers=StreamPlatformSerializer(queryset,many=True,context={'request': request})
+        return Response(serializers.data)
+    
+    def retrieve(self,request,pk):
+        queryset=StreamPlatform.objects.all()
+        watchlist=get_object_or_404(queryset,pk=pk)
+        serializers=StreamPlatformSerializer(watchlist)
+        return Response(serializers.data)
 
 
 class ReviewCreate(generics.CreateAPIView):
