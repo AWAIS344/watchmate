@@ -4,7 +4,7 @@ from rest_framework.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
-
+from rest_framework.permissions import IsAuthenticated
 from watchlist_app.models import Reviews,WatchList, StreamPlatform
 from .serializers import WatchListSerializer,StreamPlatformSerializer,ReviewSerializer
 
@@ -47,7 +47,7 @@ class ReviewCreate(generics.CreateAPIView):
 
 
 class ReviewList(generics.ListAPIView):
-    
+    permission_classes=[IsAuthenticated]
     serializer_class=ReviewSerializer
 
     def get_queryset(self):
