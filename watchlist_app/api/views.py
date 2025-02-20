@@ -1,5 +1,6 @@
 from rest_framework import serializers,generics,viewsets
 from rest_framework.views import APIView
+from rest_framework.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
@@ -28,15 +29,25 @@ class StreamPlatformVS(viewsets.ViewSet):
 
 
 class ReviewCreate(generics.CreateAPIView):
+    queryset=Reviews.objects.all()
     serializer_class=ReviewSerializer
 
+
     def perform_create(self, serializer):
+
         pk = self.kwargs.get('pk')
+
+        user=self.request.user
         movie=WatchList.objects.get(pk=pk)
-        serializer.save(watchlist=movie)
+        review_queryset=Reviews.objects.filter(review_user=user,watchlist=movie)
+        
+        if review_queryset.exists():
+            raise ValidationError("Yoo already had reviewed this Movie")
+        serializer.save(watchlist=movie,review_user=user)
 
 
 class ReviewList(generics.ListAPIView):
+    
     serializer_class=ReviewSerializer
 
     def get_queryset(self):
