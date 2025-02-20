@@ -14,17 +14,17 @@ class StreamPlatformVS(viewsets.ModelViewSet):
     serializer_class=StreamPlatformSerializer
 
 
-# class StreamPlatformVS(viewsets.ViewSet):
-#     def list(self,request):
-#         queryset=StreamPlatform.objects.all()
-#         serializers=StreamPlatformSerializer(queryset,many=True,context={'request': request})
-#         return Response(serializers.data)
+class StreamPlatformVS(viewsets.ViewSet):
+    def list(self,request):
+        queryset=StreamPlatform.objects.all()
+        serializers=StreamPlatformSerializer(queryset,many=True,context={'request': request})
+        return Response(serializers.data)
     
-#     def retrieve(self,request,pk=None):
-#         queryset=StreamPlatform.objects.all()
-#         watchlist=get_object_or_404(queryset,pk=pk)
-#         serializers=StreamPlatformSerializer(watchlist)
-#         return Response(serializers.data)
+    def retrieve(self,request,pk=None):
+        queryset=StreamPlatform.objects.all()
+        watchlist=get_object_or_404(queryset,pk=pk)
+        serializers=StreamPlatformSerializer(watchlist)
+        return Response(serializers.data)
 
 
 class ReviewCreate(generics.CreateAPIView):
