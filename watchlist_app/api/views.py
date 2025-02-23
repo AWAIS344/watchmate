@@ -16,6 +16,7 @@ class StreamPlatformVS(viewsets.ModelViewSet):
 
 
 class StreamPlatformVS(viewsets.ViewSet):
+
     def list(self,request):
         queryset=StreamPlatform.objects.all()
         serializers=StreamPlatformSerializer(queryset,many=True,context={'request': request})
@@ -62,6 +63,7 @@ class ReviewList(generics.ListAPIView):
 #     serializer_class=ReviewSerializer
 #     def get(self, request, *args, **kwargs):
 #         return self.retrieve(request, *args, **kwargs)
+
 
 # class ReviewList(generics.ListCreateAPIView):
 #     queryset=Reviews.objects.all()

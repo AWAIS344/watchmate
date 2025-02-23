@@ -19,9 +19,9 @@ urlpatterns = [
     # path("stream/<int:pk>",PlatformDetailsAC.as_view(),name="platformdetails"),
 
 
-    path("stream/<int:pk>/review-create",ReviewCreate.as_view(),name="review_create"),
-    path("stream/review/<int:pk>",ReviewDetails.as_view(),name="review_detail"),
-    path("stream/<int:pk>/review",ReviewList.as_view(),name="review_list"),
+    path("<int:pk>/review-create",ReviewCreate.as_view(),name="review_create"),
+    path("review/<int:pk>",ReviewDetails.as_view(),name="review_detail"),
+    path("<int:pk>/review",ReviewList.as_view(),name="review_list"),
     path("",include(router.urls))
     
 
