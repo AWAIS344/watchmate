@@ -47,6 +47,11 @@ class ReviewCreate(generics.CreateAPIView):
         
         if movie.no_of_rating == 0:
             movie.avg_rating=serializer.validated_data['rating']
+        else:
+            movie.avg_rating=(movie.avg_rating + serializer.validated_data['rating'] )/2
+            
+        movie.no_of_rating+=1
+        movie.save()
         serializer.save(watchlist=movie,review_user=user)
 
 
