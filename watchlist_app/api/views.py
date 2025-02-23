@@ -44,6 +44,9 @@ class ReviewCreate(generics.CreateAPIView):
         
         if review_queryset.exists():
             raise ValidationError("Yoo already had reviewed this Movie")
+        
+        if movie.no_of_rating == 0:
+            movie.avg_rating=serializer.validated_data['rating']
         serializer.save(watchlist=movie,review_user=user)
 
 
