@@ -4,8 +4,6 @@ from django.shortcuts import render
 from rest_framework.routers import DefaultRouter
 
 
-
-
 from .views import WATCHLISTAV,WATCHDETAILSAC,PlatformAC,PlatformDetailsAC,ReviewList,ReviewDetails,ReviewCreate,StreamPlatformVS
 
 router=DefaultRouter()

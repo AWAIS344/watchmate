@@ -1,5 +1,6 @@
 from rest_framework import serializers,generics,viewsets
 from rest_framework.views import APIView
+from rest_framework.authentication import SessionAuthentication,BaseAuthentication
 from rest_framework.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
@@ -49,13 +50,14 @@ class ReviewCreate(generics.CreateAPIView):
             movie.avg_rating=serializer.validated_data['rating']
         else:
             movie.avg_rating=(movie.avg_rating + serializer.validated_data['rating'] )/2
-            
+
         movie.no_of_rating+=1
         movie.save()
         serializer.save(watchlist=movie,review_user=user)
 
 
 class ReviewList(generics.ListAPIView):
+    # authentication_classes=[bas]
     permission_classes=[IsAuthenticated]   #Object Level Permissions
     serializer_class=ReviewSerializer
 
