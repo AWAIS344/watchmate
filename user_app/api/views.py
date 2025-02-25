@@ -9,6 +9,14 @@ from user_app.api.serializers import RegisterSerializer
 # Create your views here.
 
 @api_view(['POST'])
+def UserLogout_View(request):
+
+    if request.method == 'POST':
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
+    
+
+@api_view(['POST'])
 def UserRegistration(request):
     
     if request.method == 'POST':
