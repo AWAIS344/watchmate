@@ -14,6 +14,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         }
 
     def save(self,):
+        email = self.validated_data["email"].lower()
+        print(f"🔥 Debug Email: {email}")
         password=self.validated_data["password"]
         passwprd2=self.validated_data["password2"]
 
@@ -23,7 +25,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         if User.objects.filter(email=self.validated_data["email"]).exists():
             raise serializers.ValidationError({'error':"User with Email Already Exists!"})
         
-        account=User(username=self.validated_data["username"],email=self.validated_data["email"])
+        account=User(username=self.validated_data["username"],email=email)
         account.set_password(password)
         account.save()
 

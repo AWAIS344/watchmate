@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from api import serializers
+from user_app.api import serializers
+from rest_framework import status
+from rest_framework.authtoken.models import Token
 from user_app.api.serializers import RegisterSerializer
 
 # Create your views here.
@@ -13,5 +15,13 @@ def UserRegistration(request):
         serializers=RegisterSerializer(data=request.data)
         
         if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data)
+            user = serializers.save()  # Save user (triggers post_save signal)
+            token, created = Token.objects.get_or_create(user=user)  # Fetch the token
+            
+            return Response({
+                'message': 'User registered successfully!',
+                'user': serializers.data,
+                'token': token.key  # Return the token in the response
+            }, status=status.HTTP_201_CREATED)
+        
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
