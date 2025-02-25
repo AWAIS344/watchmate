@@ -17,7 +17,7 @@ def UserLogout_View(request):
     
 
 @api_view(['POST'])
-def UserRegistration(request):
+def UserRegistration_View(request):
     
     if request.method == 'POST':
         serializers=RegisterSerializer(data=request.data)
