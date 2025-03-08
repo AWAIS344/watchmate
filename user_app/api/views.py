@@ -5,6 +5,7 @@ from user_app.api import serializers
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from user_app.api.serializers import RegisterSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
 
 # Create your views here.
 
@@ -24,12 +25,13 @@ def UserRegistration_View(request):
         
         if serializers.is_valid():
             user = serializers.save()  # Save user (triggers post_save signal)
-            token, created = Token.objects.get_or_create(user=user)  # Fetch the token
+            refresh = RefreshToken.for_user(user)
             
             return Response({
                 'message': 'User registered successfully!',
                 'user': serializers.data,
-                'token': token.key  # Return the token in the response
+                'access_token': str(refresh.access_token),  # Return access token
+                'refresh_token': str(refresh)  # Return refresh token
             }, status=status.HTTP_201_CREATED)
         
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
