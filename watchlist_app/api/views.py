@@ -10,6 +10,7 @@ from watchlist_app.models import Reviews,WatchList, StreamPlatform
 from .serializers import WatchListSerializer,StreamPlatformSerializer,ReviewSerializer
 from watchlist_app.api.permissions import IsAdminOrReadOnly, IsReviewUserOrReadOnly
 from .throttling import ReviewCreateThrottle, ReviewListThrottle
+from rest_framework.throttling import ScopedRateThrottle
 
 
 
@@ -90,6 +91,8 @@ class ReviewDetails(generics.RetrieveUpdateDestroyAPIView):
     permission_classes=[IsReviewUserOrReadOnly]
     queryset=Reviews.objects.all()
     serializer_class=ReviewSerializer
+    throttle_classes=[ScopedRateThrottle]
+    throttle_scope="review-details"
 
 
 
