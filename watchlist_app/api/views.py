@@ -1,6 +1,7 @@
 from rest_framework import serializers,generics,viewsets
 from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication,BaseAuthentication
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
@@ -63,10 +64,13 @@ class ReviewCreate(generics.CreateAPIView):
 
 
 class ReviewList(generics.ListAPIView):
-    # authentication_classes=[bas]
+    # authentication_classes=[bas] 
     # permission_classes=[IsAuthenticated]   #Object Level Permissions
     serializer_class=ReviewSerializer
     throttle_classes=[ReviewListThrottle]
+    filter_backends=[DjangoFilterBackend]
+    filterset_fields=["review_user__username","active"]
+
 
     def get_queryset(self):
         pk=self.kwargs['pk']

@@ -33,13 +33,14 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.contenttypes',
+    'django.contrib.contenttypes', 
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "watchlist_app",
     "rest_framework",
-    "rest_framework.authtoken"
+    "rest_framework.authtoken",
+    "django_filters"
 ]
 
 MIDDLEWARE = [
