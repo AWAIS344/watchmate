@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from watchlist_app.models import Reviews,WatchList, StreamPlatform
 from .serializers import WatchListSerializer,StreamPlatformSerializer,ReviewSerializer
 from watchlist_app.api.permissions import IsAdminOrReadOnly, IsReviewUserOrReadOnly
+from .throttling import ReviewCreateThrottle, ReviewListThrottle
 
 
 
@@ -36,6 +37,7 @@ class ReviewCreate(generics.CreateAPIView):
     permission_classes=[IsAuthenticated]
     queryset=Reviews.objects.all()
     serializer_class=ReviewSerializer
+    throttle_classes=[ReviewCreateThrottle]
 
 
     def perform_create(self, serializer):
@@ -63,6 +65,7 @@ class ReviewList(generics.ListAPIView):
     # authentication_classes=[bas]
     # permission_classes=[IsAuthenticated]   #Object Level Permissions
     serializer_class=ReviewSerializer
+    throttle_classes=[ReviewListThrottle]
 
     def get_queryset(self):
         pk=self.kwargs['pk']
