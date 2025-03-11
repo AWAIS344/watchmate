@@ -123,6 +123,10 @@ class   WATCHLISTAV(generics.ListCreateAPIView):
     permission_classes=[IsAdminOrReadOnly]
     queryset=WatchList.objects.all()
     serializer_class=WatchListSerializer
+    # filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.OrderingFilter]
+    # search_fields = ['title', 'genre',]
+    ordering_fields = ['avg_rating']
 
 class WATCHDETAILSAC(generics.RetrieveUpdateDestroyAPIView):
     permission_classes=[IsAdminOrReadOnly]

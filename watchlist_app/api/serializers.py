@@ -9,11 +9,11 @@ class ReviewSerializer(serializers.ModelSerializer):
         model=Reviews
         # fields="__all__"
         exclude=["watchlist"]
-
+ 
 class WatchListSerializer(serializers.ModelSerializer):
-    len_name=serializers.SerializerMethodField()
-    reviews=ReviewSerializer(many=True,read_only=True)
-    platform = serializers.PrimaryKeyRelatedField(queryset=StreamPlatform.objects.all())
+    # len_name=serializers.SerializerMethodField()
+    # reviews=ReviewSerializer(many=True,read_only=True)
+    platform = serializers.CharField(source='platform.name')
 
     
     class Meta:
