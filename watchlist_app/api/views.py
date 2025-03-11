@@ -13,6 +13,7 @@ from watchlist_app.api.permissions import IsAdminOrReadOnly, IsReviewUserOrReadO
 from .throttling import ReviewCreateThrottle, ReviewListThrottle
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework import filters
+from .pagination import WatchlistPagination
 
 
 
@@ -127,6 +128,7 @@ class   WATCHLISTAV(generics.ListCreateAPIView):
     filter_backends = [filters.OrderingFilter]
     # search_fields = ['title', 'genre',]
     ordering_fields = ['avg_rating']
+    pagination_class = WatchlistPagination
 
 class WATCHDETAILSAC(generics.RetrieveUpdateDestroyAPIView):
     permission_classes=[IsAdminOrReadOnly]
