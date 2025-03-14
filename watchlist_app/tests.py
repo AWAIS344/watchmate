@@ -84,6 +84,8 @@ class WatchListTestCase(APITestCase):
     def test_watch_ind(self):
         response= self.client.get(reverse("moviedetails" , args=(self.watch.id,)))
         self.assertEqual(response.status_code,status.HTTP_200_OK)
+        self.assertEqual(models.WatchList.objects.get().title ,"X-MAN SEASON 1")
+
 
 
 
