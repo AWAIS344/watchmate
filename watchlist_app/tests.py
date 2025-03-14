@@ -51,11 +51,21 @@ class WatchListTestCase(APITestCase):
             about="#1 stream platform",
             link="https://netflix.com")
         
+        self.watch=models.WatchList.objects.create(
+            platform = self.stream,
+            title="X-MAN SEASON 1",
+            storyline="A story of X man",
+            genre="action",
+            published=True,
+            year=200
+
+        )
+        
     def test_watch_create(self):
 
         data = {
 
-            "platfrom":self.stream,
+            "platform":self.stream,
             "title":"X-MAN SEASON 1",
             "storyline":"A story of X man",
             "genre":"action",
@@ -69,10 +79,10 @@ class WatchListTestCase(APITestCase):
     def test_watch_list(self):
         response= self.client.get(reverse("watchlist"))
         self.assertEqual(response.status_code,status.HTTP_200_OK)
-        
 
-    def test_watch_list(self):
-        response= self.client.get(reverse("watchlist"))
+
+    def test_watch_ind(self):
+        response= self.client.get(reverse("moviedetails" , args=(self.watch.id,)))
         self.assertEqual(response.status_code,status.HTTP_200_OK)
 
 
