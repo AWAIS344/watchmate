@@ -88,6 +88,97 @@ class WatchListTestCase(APITestCase):
 
 
 
+class ReviewTestCase(APITestCase):
+
+
+    def setUp(self):
+        self.user=User.objects.create_user(username='awais',password='awais1234')
+        self.token = Token.objects.create(user=self.user)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+
+        self.stream= models.StreamPlatform.objects.create(name="netflix",
+            about="#1 stream platform",
+            link="https://netflix.com")
+        
+        self.watch=models.WatchList.objects.create(
+            platform = self.stream,
+            title="X-MAN SEASON 1",
+            storyline="A story of X man",
+            genre="action",
+            published=True,
+            year=200
+
+        )
+
+        self.watch2=models.WatchList.objects.create(
+            platform = self.stream,
+            title="X-MAN ",
+            storyline="A story of X man",
+            genre="action",
+            published=True,
+            year=200
+
+        )
+
+        self.review=models.Reviews.objects.create(review_user=self.user, rating=5,comment='Was Good Movie', watchlist=self.watch2 , active=False)
+        
+    def test_review_create(self):
+        data={
+
+            "review_user":self.user,
+            "rating":4,
+            "comment":"Good Movie",
+            "watchlist":self.watch,
+            "active":True
+
+        }
+
+        responce=self.client.post(reverse("review_create", args=(self.watch.id,)) , data)
+        self.assertEqual(responce.status_code , status.HTTP_201_CREATED)
+
+    def test_review_create_unauth(self):
+
+        data={
+
+            "review_user":self.user,
+            "rating":4,
+            "comment":"Good Movie",
+            "watchlist":self.watch,
+            "active":True
+
+        }
+
+        self.client.force_authenticate(user=None)
+        responce=self.client.post(reverse("review_create", args=(self.watch.id,)) , data)
+        self.assertEqual(responce.status_code , status.HTTP_401_UNAUTHORIZED)
+
+    def test_review_update(self):
+
+        data={
+
+            "review_user":self.user,
+            "rating":5,
+            "comment":"Good Movie - Updated",
+            "watchlist":self.watch,
+            "active":True
+
+        }
+
+        responce=self.client.put(reverse("review_detail" , args=(self.review.id,)), data )
+        self.assertEqual(responce.status_code , status.HTTP_200_OK)
+
+
+
+
+
+
+
+
+        
+        
+
+
+
 
 
 
