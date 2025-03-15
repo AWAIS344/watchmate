@@ -17,6 +17,14 @@ from .pagination import WatchlistPagination,WatchlistLOPagination
 
 
 
+class UserReview(generics.ListAPIView):
+
+    serializer_class= ReviewSerializer
+
+    def get(self):
+        username = self.request.query_param.get("username",None)
+        return Reviews.objects.filter(review_user__username=username)
+
 
 class StreamPlatformVS(viewsets.ModelViewSet):
     permission_classes=[IsAdminOrReadOnly]
