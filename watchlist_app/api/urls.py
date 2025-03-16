@@ -4,7 +4,7 @@ from django.shortcuts import render
 from rest_framework.routers import DefaultRouter
 
 
-from .views import WATCHLISTAV,WATCHDETAILSAC,PlatformAC,PlatformDetailsAC,ReviewList,ReviewDetails,ReviewCreate,StreamPlatformVS
+from .views import WATCHLISTAV,WATCHDETAILSAC,PlatformAC,PlatformDetailsAC,ReviewList,ReviewDetails,ReviewCreate,StreamPlatformVS, UserReview
 
 router=DefaultRouter()
 
@@ -20,7 +20,9 @@ urlpatterns = [
     path("<int:pk>/review-create",ReviewCreate.as_view(),name="review_create"),
     path("review/<int:pk>",ReviewDetails.as_view(),name="review_detail"),
     path("<int:pk>/review/",ReviewList.as_view(),name="review_list"),
-    path("",include(router.urls))
+    path("",include(router.urls)),
+
+    path("reviews/",UserReview.as_view(),name="user_review_list"),
     
 
 ]
